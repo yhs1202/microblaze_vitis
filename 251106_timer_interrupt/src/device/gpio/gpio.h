@@ -42,5 +42,7 @@ void GPIO_Set(GPIO_TypeDef *gpio, uint8_t pinNum);
 void GPIO_Reset(GPIO_TypeDef *gpio, uint8_t pinNum);
 void GPIO_Toggle(GPIO_TypeDef *gpio, uint8_t pinNum);
 
+extern volatile uint8_t gpioB_shadow;
+void GPIOB_Shadow_Write();
 
 #endif /* SRC_DEVICE_GPIO_GPIO_H_ */

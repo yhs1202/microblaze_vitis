@@ -34,3 +34,9 @@ void GPIO_Reset(GPIO_TypeDef *gpio, uint8_t pinNum) {
 void GPIO_Toggle(GPIO_TypeDef *gpio, uint8_t pinNum) {
 	gpio->ODR ^= (1<<pinNum);
 }
+
+
+volatile uint8_t gpioB_shadow = 0xFF;
+void GPIOB_Shadow_Write() {
+	GPIOB->ODR = gpioB_shadow;
+}

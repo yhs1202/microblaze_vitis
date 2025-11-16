@@ -38,7 +38,7 @@ int FND_GetNumber() {
 }
 
 void FND_DispNumber() {
-	FND_SetNumber(fndNumber);
+	// FND_SetNumber(fndNumber);
 	static int fndPos = 0;
 	fndPos = (fndPos + 1) % 4;
 	FND_AllOff();
@@ -65,15 +65,19 @@ void FND_DispNumber() {
 
 void FND_AllOff() {
 	// ALL Digit OFF
-	GPIO_Set(fnd.gpio_com, fnd.digit_1);
-	GPIO_Set(fnd.gpio_com, fnd.digit_10);
-	GPIO_Set(fnd.gpio_com, fnd.digit_100);
-	GPIO_Set(fnd.gpio_com, fnd.digit_1000);
+	//// GPIO_Set(fnd.gpio_com, fnd.digit_1);
+	//// GPIO_Set(fnd.gpio_com, fnd.digit_10);
+	//// GPIO_Set(fnd.gpio_com, fnd.digit_100);
+	//// GPIO_Set(fnd.gpio_com, fnd.digit_1000);
+	gpioB_shadow |= 0x0F;
 }
 
 void FND_SelDigit(int digit) {
 	// Selected digit ON (active low)
-	GPIO_Reset(fnd.gpio_com, digit);  // (same with)	fnd.gpio_com->ODR &= ~(1<<digit);
+	// GPIO_Reset(fnd.gpio_com, digit);  // (same with)	fnd.gpio_com->ODR &= ~(1<<digit);
+	// fnd.gpio_com->ODR = (fnd.gpio_com->ODR & 0xF0) | ( ( ( ~ (1 << digit) ) & 0x0F) );
+	gpioB_shadow |= 0x0F; // Clear lower 4 bits
+	gpioB_shadow &= ~(1 << digit);
 }
 
 void FND_ShowDigit(int digit) {
@@ -90,6 +94,7 @@ void FND_ShowDigit(int digit) {
 		0x90	// 9
 	};
 	GPIO_Write(fnd.gpio_seg, segFont[digit]);
+	
 
 }
 

@@ -109,6 +109,7 @@ void TIMER_Intr_Init() {
 void ISR() {
 	// millisCounter();
 	FND_DispNumber();
+	GPIOB_Shadow_Write();
 }
 
 // void millisCounter() {
